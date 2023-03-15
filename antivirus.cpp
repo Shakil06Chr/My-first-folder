@@ -1,13 +1,11 @@
 #include <fstream>
 #include <sstream>
-#include <iostream>
-#include <sys/stat.h>
-#include <dirent.h>
-#include <conio.h>
+#include<iostream>
+#include<sys\stat.h>
+#include<dirent.h>
+#include<conio.h>
 
 using namespace std;
-
-void hexvalue(string str1);
 
 void file_detect()
 {
@@ -16,66 +14,71 @@ void file_detect()
 
     DIR *dr;
 
-    string path = ".\\";
-    dr = opendir(path.c_str());
+   string path= ".\\";
+    dr=opendir(path.c_str());
 
-    if (dr != NULL)
+    if(dr!=NULL)
     {
-        while ((d = readdir(dr)) != NULL)
-        {
-            string type = d->d_name;
-            if (stat(type.c_str(), &dst) == 0)
-            {
+      for(d=readdir(dr);d!=NULL;d=readdir(dr))
+      {
+          string type=d->d_name;
+          type=type;
+          if(stat(type.c_str(),&dst)==0)
+          {
 
-                if (dst.st_mode & S_IFDIR)
-                {
-                    type = "is a folder";
-                    // continue;
-                }
-                else if (dst.st_mode & S_IFREG)
-                {
-                    type = "is a file";
-                }
-            }
-             cout<<" my name is Shakil hossain\n\n\n";
-            cout << d->d_name << endl << endl;
-            hexvalue(d->d_name);
-        }
+             if(dst.st_mode &S_IFDIR)
+              {
+                   type="is a folder";
+                  // continue;
+              }
+            else if(dst.st_mode & S_IFREG)
+              {
+                 type="is a file";
+              }
 
-        closedir(dr);
+          }
+          cout<<d->d_name<<endl<<endl;
+
+      }
+      closedir(dr);
+
+
     }
     else
     {
-        cerr << "Error opening directory\n";
-        return;
-    }
+       ;
 
+    }
     getch();
+
 }
 
-void hexvalue(string str1)
+
+void hexvalue()
 {
-    ifstream file("C:\\Users\\USER\\Desktop\\test\\" + str1, ios::binary);
-    if (!file.is_open())
-    {
-        cerr << "Error opening file\n";
-        return;
+    ifstream file("C:\\Users\\USER\\Desktop\\test\\A simple note for English.pdf", ios::binary); // replace "filename.bin" with the name of your file
+    if (!file.is_open()) {
+       cerr << "Error opening file\n";
+
     }
 
-    stringstream ss;
+    stringstream ss; // create a stringstream object to store the hexadecimal values
     char ch;
-    while (file.get(ch))
-    {
-        ss << hex << uppercase << static_cast<int>(ch);
+    while (file.get(ch)) {
+        ss << hex << uppercase << static_cast<int>(ch); // convert the character to its hexadecimal value and store it in the stringstream object
     }
+    string hex = ss.str(); // convert the stringstream object to a string
 
-    string hex = ss.str();
-    cout << hex <<"this is first hex\n\n\n"<< endl;
+    cout << hex << endl; // print the string of hexadecimal values
     file.close();
+
+
 }
+using namespace std;
 
 int main()
 {
-    file_detect();
+    hexvalue();
     return 0;
+
 }
